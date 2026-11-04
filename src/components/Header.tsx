@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import UserMenu from "@/components/UserMenu";
 
 export default function Header() {
   return (
@@ -13,13 +14,7 @@ export default function Header() {
         <Nav />
       </div>
 
-      <Link
-        href="/profile"
-        aria-label="Mon compte"
-        className="bg-brand-light text-brand-dark flex h-12 w-12 items-center justify-center rounded-full"
-      >
-        AD
-      </Link>
+      <UserMenu />
     </header>
   );
 }
