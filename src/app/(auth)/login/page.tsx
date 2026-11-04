@@ -54,7 +54,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-card bg-grey-800 disabled:bg-grey-400 h-[50px] w-[249px] self-center text-white"
+            className="rounded-card bg-grey-800 disabled:bg-grey-400 h-[50px] self-center px-[74px] text-white"
           >
             {isPending ? "Connexion..." : "Se connecter"}
           </button>
