@@ -48,7 +48,7 @@ export async function getProfile() {
 export async function updateProfile(name: string, email: string) {
   return request<{ user: User }>("/auth/profile", {
     method: "PUT",
-    body: JSON.stringify({ name, email }),
+    body: JSON.stringify({ name: name || undefined, email }),
   });
 }
 
