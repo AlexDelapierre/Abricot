@@ -1,9 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getProfile } from "@/api";
 import Nav from "@/components/Nav";
 import UserMenu from "@/components/UserMenu";
 
-export default function Header() {
+export default async function Header() {
+  const response = await getProfile();
+  const user = response.data?.user;
+  const initials = user?.name
+    ?.split(" ")
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 bg-white px-4 py-4 md:px-10">
       <Link href="/dashboard">
@@ -14,7 +24,7 @@ export default function Header() {
         <Nav />
       </div>
 
-      <UserMenu />
+      <UserMenu initials={initials} />
     </header>
   );
 }
