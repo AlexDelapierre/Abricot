@@ -2,11 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(request: NextRequest) {
-  const hasToken = request.cookies.has("token");
-  const { pathname } = request.nextUrl;
-  const isAuthPage = pathname === "/login" || pathname === "/register";
-
-  if (!hasToken && !isAuthPage) {
+  if (!request.cookies.has("token")) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -14,11 +10,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/login",
-    "/register",
-    "/dashboard",
-    "/projects/:path*",
-    "/profile",
-  ],
+  matcher: ["/dashboard", "/projects/:path*", "/profile"],
 };
