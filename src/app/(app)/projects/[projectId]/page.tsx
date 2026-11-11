@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getProject } from "@/api";
-import ProjectModal from "@/components/projects/ProjectModal";
+import ProjectModal from "@/components/ProjectModal";
 import { getInitials } from "@/utils";
 
 export default async function ProjectPage({
