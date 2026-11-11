@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getProfile } from "@/api";
-import ProfileForm from "@/components/profile/ProfileForm";
+import ProfileForm from "@/components/ProfileForm";
 
 export default async function ProfilePage() {
   const response = await getProfile();
