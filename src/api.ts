@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import type { ApiResponse, AuthData, User } from "@/types";
+import type { ApiResponse, AuthData, Project, User } from "@/types";
 
 async function request<T>(
   path: string,
@@ -60,4 +60,57 @@ export async function updatePassword(
     method: "PUT",
     body: JSON.stringify({ currentPassword, newPassword }),
   });
+}
+
+export async function getProjects() {
+  return request<{ projects: Project[] }>("/projects");
+}
+
+export async function getProject(id: string) {
+  return request<{ project: Project }>(`/projects/${id}`);
+}
+
+export async function createProject(
+  name: string,
+  description: string,
+  contributors: string[],
+) {
+  return request<{ project: Project }>("/projects", {
+    method: "POST",
+    body: JSON.stringify({ name, description, contributors }),
+  });
+}
+
+export async function updateProject(
+  id: string,
+  name: string,
+  description: string,
+) {
+  return request<{ project: Project }>(`/projects/${id}`, {
+    method: "PUT",
+    body: JSON.stringify({ name, description }),
+  });
+}
+
+export async function deleteProject(id: string) {
+  return request<undefined>(`/projects/${id}`, { method: "DELETE" });
+}
+
+export async function addContributor(id: string, email: string) {
+  return request<undefined>(`/projects/${id}/contributors`, {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+}
+
+export async function removeContributor(id: string, userId: string) {
+  return request<undefined>(`/projects/${id}/contributors/${userId}`, {
+    method: "DELETE",
+  });
+}
+
+export async function searchUsers(query: string) {
+  return request<{ users: Pick<User, "id" | "email" | "name">[] }>(
+    `/users/search?query=${encodeURIComponent(query)}`,
+  );
 }
