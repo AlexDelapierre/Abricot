@@ -18,6 +18,15 @@ import {
 } from "@/api";
 import type { ProjectFormState } from "@/types";
 
+async function saveToken(token: string) {
+  (await cookies()).set("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+}
+
 export async function loginAction(
   previousState: { error?: string },
   formData: FormData,
@@ -27,16 +36,11 @@ export async function loginAction(
     String(formData.get("password")),
   );
 
-  if (!response.success || !response.data) {
+  if (!response.data) {
     return { error: response.message };
   }
 
-  (await cookies()).set("token", response.data.token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
-  });
+  await saveToken(response.data.token);
   redirect("/dashboard");
 }
 
@@ -49,16 +53,11 @@ export async function registerAction(
     String(formData.get("password")),
   );
 
-  if (!response.success || !response.data) {
+  if (!response.data) {
     return { error: response.message };
   }
 
-  (await cookies()).set("token", response.data.token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
-  });
+  await saveToken(response.data.token);
   redirect("/dashboard");
 }
 

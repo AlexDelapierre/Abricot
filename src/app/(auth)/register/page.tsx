@@ -11,8 +11,8 @@ export default function RegisterPage() {
   });
 
   return (
-    <div className="flex min-h-screen">
-      <div className="bg-grey-50 flex w-full flex-col items-center justify-between px-4 py-14 md:w-[39%] md:px-[140px]">
+    <main className="flex min-h-screen">
+      <div className="flex w-full flex-col items-center justify-between px-4 py-14 md:w-[39%] md:px-[140px]">
         <Image src="/logo.svg" alt="Abricot" width={253} height={32} priority />
 
         <form
@@ -82,6 +82,6 @@ export default function RegisterPage() {
           className="object-cover"
         />
       </div>
-    </div>
+    </main>
   );
 }

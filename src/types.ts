@@ -2,14 +2,12 @@ export interface User {
   id: string;
   email: string;
   name: string | null;
-  createdAt: string;
 }
 
 export interface ApiResponse<T> {
   success: boolean;
   message: string;
   data?: T;
-  error?: string;
 }
 
 export interface AuthData {
@@ -27,7 +25,10 @@ export interface ProjectFormState {
 export interface Task {
   id: string;
   title: string;
+  description: string | null;
   status: "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
+  priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
+  dueDate: string | null;
 }
 
 export interface Project {
@@ -39,4 +40,9 @@ export interface Project {
   userRole: "ADMIN" | "CONTRIBUTOR";
   _count: { tasks: number };
   tasks?: Task[];
+}
+
+export interface AssignedTask extends Task {
+  project: Pick<Project, "id" | "name">;
+  comments: { id: string }[];
 }

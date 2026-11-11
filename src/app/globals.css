@@ -1,17 +1,9 @@
 @import "tailwindcss";
 
-/*
- * Design tokens issus des maquettes Figma.
- * Chaque variable --color-* génère les utilitaires Tailwind correspondants
- * (ex. --color-brand-main => bg-brand-main, text-brand-main, border-brand-main).
- */
 @theme {
-  /* Marque */
-  --color-brand-main: #ff8b42;
   --color-brand-light: #ffe8d9;
   --color-brand-dark: #d35908;
 
-  /* Neutres */
   --color-grey-50: #f9fafb;
   --color-grey-100: #f3f4f6;
   --color-grey-200: #e5e7eb;
@@ -20,7 +12,6 @@
   --color-grey-800: #1f1f1f;
   --color-grey-950: #0f0f0f;
 
-  /* Statuts : À faire (error), En cours (warning), Terminée (success) */
   --color-error: #ef4444;
   --color-error-light: #ffe0e0;
   --color-warning: #e08d00;
@@ -28,16 +19,9 @@
   --color-success: #27ae60;
   --color-success-light: #f1fff7;
 
-  /* Arrondi des modales, boutons et éléments du menu (10px) */
   --radius-card: 10px;
 }
 
-/*
- * Typographie : Inter pour le texte, Manrope pour les titres.
- * Les variables --font-inter et --font-manrope sont définies dans layout.tsx.
- * Les tailles de texte de la maquette (12, 14, 16, 18 et 24px) correspondent
- * aux tailles par défaut de Tailwind (text-xs, text-sm, text-base, text-lg, text-2xl).
- */
 @theme inline {
   --font-sans: var(--font-inter);
   --font-heading: var(--font-manrope);
