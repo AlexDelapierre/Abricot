@@ -1,10 +1,16 @@
 import { cookies } from "next/headers";
-import type { ApiResponse, AuthData, Project, User } from "@/types";
+import type {
+  ApiResponse,
+  AssignedTask,
+  AuthData,
+  Project,
+  User,
+} from "@/types";
 
 async function request<T>(
   path: string,
   options: RequestInit = {},
-): Promise<ApiResponse<T> & { status: number }> {
+): Promise<ApiResponse<T>> {
   const token = (await cookies()).get("token")?.value;
 
   try {
@@ -15,14 +21,11 @@ async function request<T>(
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
     });
-    const body = await response.json();
-
-    return { ...body, status: response.status };
+    return await response.json();
   } catch {
     return {
       success: false,
       message: "Serveur indisponible, réessayez plus tard",
-      status: 503,
     };
   }
 }
@@ -60,6 +63,10 @@ export async function updatePassword(
     method: "PUT",
     body: JSON.stringify({ currentPassword, newPassword }),
   });
+}
+
+export async function getAssignedTasks() {
+  return request<{ tasks: AssignedTask[] }>("/dashboard/assigned-tasks");
 }
 
 export async function getProjects() {
