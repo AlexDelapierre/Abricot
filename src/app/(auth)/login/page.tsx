@@ -58,6 +58,13 @@ export default function LoginPage() {
           >
             {isPending ? "Connexion..." : "Se connecter"}
           </button>
+
+          <button
+            type="button"
+            className="text-brand-dark self-center text-sm underline"
+          >
+            Mot de passe oublié ?
+          </button>
         </form>
 
         <p className="w-full max-w-[282px] text-sm">
