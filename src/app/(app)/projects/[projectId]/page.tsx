@@ -108,7 +108,44 @@ export default async function ProjectPage({
             <p className="text-grey-600">Par ordre de priorité</p>
           </div>
 
-          <div className="flex w-full flex-wrap gap-4 md:w-auto">
+          <div className="flex w-full flex-wrap items-center gap-4 md:w-auto">
+            <nav aria-label="Vues des tâches" className="flex gap-3">
+              <span
+                aria-current="page"
+                className="rounded-card bg-brand-light text-brand-dark flex items-center gap-3 px-5 py-3"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9" />
+                </svg>
+                Liste
+              </span>
+              <button
+                type="button"
+                className="rounded-card text-brand-dark flex items-center gap-3 px-5 py-3"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <path d="M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" />
+                </svg>
+                Calendrier
+              </button>
+            </nav>
+
             <details key={status} className="relative w-full md:w-[152px]">
               <summary className="border-grey-200 text-grey-600 flex h-[62px] cursor-pointer list-none items-center justify-between rounded-sm border bg-white px-[30px]">
                 {status
