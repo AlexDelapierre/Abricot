@@ -5,10 +5,12 @@ import { updateProfileAction } from "@/actions";
 import type { User } from "@/types";
 
 export default function ProfileForm({ user }: { user: User }) {
+  const [firstName, ...lastName] = (user.name ?? "").split(" ");
   const [state, formAction, isPending] = useActionState(updateProfileAction, {
     error: "",
     success: "",
-    name: user.name ?? "",
+    lastName: lastName.join(" "),
+    firstName,
     email: user.email,
   });
 
@@ -17,9 +19,19 @@ export default function ProfileForm({ user }: { user: User }) {
       <label className="flex flex-col gap-[7px] text-sm">
         Nom
         <input
-          name="name"
-          defaultValue={state.name}
-          autoComplete="name"
+          name="lastName"
+          defaultValue={state.lastName}
+          autoComplete="family-name"
+          className="border-grey-200 rounded-sm border bg-white px-[17px] py-[19px] text-base"
+        />
+      </label>
+
+      <label className="flex flex-col gap-[7px] text-sm">
+        Prénom
+        <input
+          name="firstName"
+          defaultValue={state.firstName}
+          autoComplete="given-name"
           className="border-grey-200 rounded-sm border bg-white px-[17px] py-[19px] text-base"
         />
       </label>
