@@ -46,3 +46,24 @@ export interface AssignedTask extends Task {
   project: Pick<Project, "id" | "name">;
   comments: { id: string }[];
 }
+
+export interface Comment {
+  id: string;
+  content: string;
+  createdAt: string;
+  author: Pick<User, "id" | "email" | "name">;
+}
+
+export interface ProjectTask extends Task {
+  assignees: { id: string; user: Pick<User, "id" | "email" | "name"> }[];
+  comments: Comment[];
+}
+
+export interface TaskFormState {
+  error: string;
+  saved: boolean;
+  title: string;
+  description: string;
+  dueDate: string;
+  status: string;
+}
