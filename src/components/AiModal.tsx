@@ -112,7 +112,7 @@ export default function AiModal() {
               </ul>
               <button
                 type="button"
-                className="rounded-card bg-grey-800 mt-6 h-[50px] self-center px-[26px] text-white"
+                className="rounded-card bg-grey-800 hover:bg-grey-950 mt-6 h-[50px] self-center px-[26px] text-white"
               >
                 + Ajouter les tâches
               </button>
@@ -140,7 +140,7 @@ export default function AiModal() {
               <button
                 type="submit"
                 aria-label="Générer les tâches"
-                className="bg-brand-dark flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white"
+                className="bg-brand-dark hover:bg-brand-light hover:text-brand-dark flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white"
               >
                 <svg
                   width="10"
