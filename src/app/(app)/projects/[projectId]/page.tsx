@@ -1,25 +1,45 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getProject } from "@/api";
+import { getProfile, getProject, getTasks } from "@/api";
 import ProjectModal from "@/components/ProjectModal";
-import { getInitials } from "@/utils";
+import ProjectTaskCard from "@/components/ProjectTaskCard";
+import TaskModal from "@/components/TaskModal";
+import { byPriority, getInitials, statuses } from "@/utils";
 
 export default async function ProjectPage({
   params,
+  searchParams,
 }: PageProps<"/projects/[projectId]">) {
   const { projectId } = await params;
-  const response = await getProject(projectId);
+  const filters = await searchParams;
+  const status = String(filters.status ?? "");
+  const query = String(filters.q ?? "");
 
-  if (!response.data) {
+  const [response, tasksResponse, profile] = await Promise.all([
+    getProject(projectId),
+    getTasks(projectId),
+    getProfile(),
+  ]);
+
+  if (!response.data || !profile.data) {
     redirect("/projects");
   }
 
   const { project } = response.data;
+  const currentUser = profile.data.user;
   const team = [project.owner, ...project.members.map((member) => member.user)];
+  const tasks = (tasksResponse.data?.tasks ?? [])
+    .filter((task) => !status || task.status === status)
+    .filter((task) =>
+      `${task.title} ${task.description ?? ""}`
+        .toLowerCase()
+        .includes(query.toLowerCase()),
+    )
+    .sort(byPriority);
 
   return (
     <section className="mx-auto mt-11 flex max-w-[1283px] flex-col gap-12">
-      <div className="flex items-start gap-[17px]">
+      <div className="flex flex-wrap items-start gap-[17px]">
         <Link
           href="/projects"
           aria-label="Retour aux projets"
@@ -38,13 +58,15 @@ export default async function ProjectPage({
           </svg>
         </Link>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-1 flex-col gap-2">
           <div className="flex flex-wrap items-baseline gap-4">
             <h1 className="text-2xl">{project.name}</h1>
             {project.userRole === "ADMIN" && <ProjectModal project={project} />}
           </div>
           <p className="text-grey-600 text-lg">{project.description}</p>
         </div>
+
+        <TaskModal projectId={project.id} team={team} />
       </div>
 
       <div className="rounded-card bg-grey-100 flex flex-wrap items-center justify-between gap-4 px-6 py-5 md:ml-[68px] md:px-[50px]">
@@ -77,6 +99,101 @@ export default async function ProjectPage({
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="rounded-card border-grey-200 border bg-white px-6 py-10 md:ml-[68px] md:px-[59px]">
+        <div className="flex flex-wrap items-center justify-between gap-6">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-lg">Tâches</h2>
+            <p className="text-grey-600">Par ordre de priorité</p>
+          </div>
+
+          <div className="flex w-full flex-wrap gap-4 md:w-auto">
+            <details key={status} className="relative w-full md:w-[152px]">
+              <summary className="border-grey-200 text-grey-600 flex h-[62px] cursor-pointer list-none items-center justify-between rounded-sm border bg-white px-[30px]">
+                {status
+                  ? statuses[status as keyof typeof statuses].label
+                  : "Statut"}
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <path d="M4 8l8 8 8-8" />
+                </svg>
+              </summary>
+              <ul className="rounded-card border-grey-200 absolute z-10 mt-1 w-full border bg-white py-2 shadow-md">
+                {["", "TODO", "IN_PROGRESS", "DONE"].map((value) => (
+                  <li key={value}>
+                    <Link
+                      href={{ query: { status: value, q: query } }}
+                      aria-current={value === status ? "true" : undefined}
+                      className="hover:bg-grey-100 block px-[30px] py-2"
+                    >
+                      {value
+                        ? statuses[value as keyof typeof statuses].label
+                        : "Tous"}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </details>
+
+            <form role="search" className="relative w-full md:w-[283px]">
+              {status && <input type="hidden" name="status" value={status} />}
+              <input
+                name="q"
+                defaultValue={query}
+                placeholder="Rechercher une tâche"
+                aria-label="Rechercher une tâche"
+                className="border-grey-200 h-[62px] w-full rounded-sm border bg-white pr-14 pl-[30px] text-base"
+              />
+              <button
+                type="submit"
+                aria-label="Rechercher"
+                className="text-grey-600 absolute top-1/2 right-5 -translate-y-1/2"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M20 20l-4-4" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {tasks.length === 0 ? (
+          <p className="text-grey-600 mt-12">
+            {status || query
+              ? "Aucune tâche ne correspond à votre recherche."
+              : "Aucune tâche pour le moment."}
+          </p>
+        ) : (
+          <ul className="mt-12 flex flex-col gap-[18px] md:px-10">
+            {tasks.map((task) => (
+              <li key={task.id}>
+                <ProjectTaskCard
+                  projectId={project.id}
+                  task={task}
+                  team={team}
+                  user={currentUser}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );
