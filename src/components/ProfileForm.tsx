@@ -89,7 +89,7 @@ export default function ProfileForm({ user }: { user: User }) {
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-card bg-grey-800 disabled:bg-grey-400 h-[50px] self-start px-7 text-white"
+        className="rounded-card bg-grey-800 hover:bg-grey-950 disabled:bg-grey-200 disabled:text-grey-400 h-[50px] self-start px-7 text-white"
       >
         {isPending ? "Modification..." : "Modifier les informations"}
       </button>
