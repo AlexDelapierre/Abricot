@@ -69,7 +69,9 @@ export default function Nav() {
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
                 className={`rounded-card flex items-center gap-3 px-4 py-3 ${
-                  isActive ? "bg-grey-950 text-white" : "text-brand-dark"
+                  isActive
+                    ? "bg-grey-950 text-white"
+                    : "text-brand-dark hover:bg-grey-950 hover:text-white"
                 }`}
               >
                 {link.icon}

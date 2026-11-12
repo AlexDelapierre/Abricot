@@ -11,7 +11,11 @@ export default function UserMenu({ initials }: { initials?: string }) {
     <details key={pathname} className="relative">
       <summary
         aria-label="Menu du compte"
-        className="bg-brand-light text-brand-dark flex h-12 w-12 cursor-pointer list-none items-center justify-center rounded-full"
+        className={`hover:bg-brand-dark flex h-12 w-12 cursor-pointer list-none items-center justify-center rounded-full hover:text-white ${
+          pathname === "/profile"
+            ? "bg-brand-dark text-white"
+            : "bg-brand-light text-brand-dark"
+        }`}
       >
         {initials || (
           <svg
