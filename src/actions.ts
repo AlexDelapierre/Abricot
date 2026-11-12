@@ -5,8 +5,11 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   addContributor,
+  createComment,
   createProject,
+  createTask,
   deleteProject,
+  deleteTask,
   getProfile,
   login,
   register,
@@ -15,8 +18,9 @@ import {
   updatePassword,
   updateProfile,
   updateProject,
+  updateTask,
 } from "@/api";
-import type { ProjectFormState } from "@/types";
+import type { ProjectFormState, TaskFormState } from "@/types";
 
 async function saveToken(token: string) {
   (await cookies()).set("token", token, {
@@ -169,6 +173,85 @@ export async function searchUsersAction(query: string) {
   return (response.data?.users ?? []).filter(
     (user) => user.id !== profile.data?.user.id,
   );
+}
+
+export async function createTaskAction(
+  previousState: TaskFormState,
+  formData: FormData,
+): Promise<TaskFormState> {
+  const projectId = String(formData.get("projectId"));
+  const fields = {
+    title: String(formData.get("title")),
+    description: String(formData.get("description")),
+    dueDate: String(formData.get("dueDate")),
+    status: String(formData.get("status")),
+    assigneeIds: formData.getAll("assigneeIds").map(String),
+  };
+
+  const response = await createTask(projectId, fields);
+
+  if (!response.data) {
+    return { ...fields, error: response.message, saved: false };
+  }
+
+  if (fields.status !== "TODO") {
+    await updateTask(projectId, response.data.task.id, fields);
+  }
+
+  revalidatePath(`/projects/${projectId}`);
+  return {
+    error: "",
+    saved: true,
+    title: "",
+    description: "",
+    dueDate: "",
+    status: "TODO",
+  };
+}
+
+export async function updateTaskAction(
+  previousState: TaskFormState,
+  formData: FormData,
+): Promise<TaskFormState> {
+  const projectId = String(formData.get("projectId"));
+  const fields = {
+    title: String(formData.get("title")),
+    description: String(formData.get("description")),
+    dueDate: String(formData.get("dueDate")),
+    status: String(formData.get("status")),
+    assigneeIds: formData.getAll("assigneeIds").map(String),
+  };
+
+  const response = await updateTask(
+    projectId,
+    String(formData.get("taskId")),
+    fields,
+  );
+
+  if (!response.data) {
+    return { ...fields, error: response.message, saved: false };
+  }
+
+  revalidatePath(`/projects/${projectId}`);
+  return { ...fields, error: "", saved: true };
+}
+
+export async function deleteTaskAction(formData: FormData) {
+  const projectId = String(formData.get("projectId"));
+
+  await deleteTask(projectId, String(formData.get("taskId")));
+  revalidatePath(`/projects/${projectId}`);
+}
+
+export async function createCommentAction(formData: FormData) {
+  const projectId = String(formData.get("projectId"));
+
+  await createComment(
+    projectId,
+    String(formData.get("taskId")),
+    String(formData.get("content")),
+  );
+  revalidatePath(`/projects/${projectId}`);
 }
 
 export async function logoutAction() {

@@ -1,15 +1,6 @@
 import Link from "next/link";
 import type { AssignedTask } from "@/types";
-
-const statuses = {
-  TODO: { label: "À faire", className: "bg-error-light text-error" },
-  IN_PROGRESS: {
-    label: "En cours",
-    className: "bg-warning-light text-warning",
-  },
-  DONE: { label: "Terminée", className: "bg-success-light text-success" },
-  CANCELLED: { label: "Annulée", className: "bg-grey-200 text-grey-600" },
-};
+import { statuses } from "@/utils";
 
 export default function TaskCard({
   task,
