@@ -43,7 +43,7 @@ export default function TaskModal({
         className={
           task
             ? "flex items-center gap-2"
-            : "rounded-card bg-grey-800 h-[50px] px-[10px] text-white md:px-[26px]"
+            : "rounded-card bg-grey-800 hover:bg-grey-950 h-[50px] px-[10px] text-white md:px-[26px]"
         }
       >
         {task && (
@@ -204,7 +204,7 @@ export default function TaskModal({
             <button
               type="submit"
               disabled={isPending}
-              className="rounded-card bg-grey-800 group-invalid:bg-grey-200 group-invalid:text-grey-400 disabled:bg-grey-200 mt-8 h-[50px] self-start px-6 text-white group-invalid:pointer-events-none"
+              className="rounded-card bg-grey-800 hover:bg-grey-950 group-invalid:bg-grey-200 group-invalid:text-grey-400 disabled:bg-grey-200 mt-8 h-[50px] self-start px-6 text-white group-invalid:pointer-events-none"
             >
               {task ? "Enregistrer" : "+ Ajouter une tâche"}
             </button>

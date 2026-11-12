@@ -36,7 +36,7 @@ export default function ProjectTaskCard({
         <details className="relative shrink-0">
           <summary
             aria-label="Actions de la tâche"
-            className="rounded-card border-grey-200 flex h-14 w-14 cursor-pointer list-none items-center justify-center border"
+            className="rounded-card border-grey-200 flex h-14 w-14 cursor-pointer hover:border-brand-dark hover:text-brand-dark list-none items-center justify-center border"
           >
             <svg
               width="20"
@@ -190,7 +190,7 @@ export default function ProjectTaskCard({
           </div>
           <button
             type="submit"
-            className="rounded-card bg-grey-800 group-invalid/comment:bg-grey-200 group-invalid/comment:text-grey-400 h-[50px] self-end px-[54px] text-white group-invalid/comment:pointer-events-none"
+            className="rounded-card bg-grey-800 hover:bg-grey-950 group-invalid/comment:bg-grey-200 group-invalid/comment:text-grey-400 h-[50px] self-end px-[54px] text-white group-invalid/comment:pointer-events-none"
           >
             Envoyer
           </button>
