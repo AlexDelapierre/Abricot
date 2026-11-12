@@ -48,8 +48,8 @@ export default function ProjectModal({ project }: { project?: Project }) {
         onClick={() => dialog.current?.showModal()}
         className={
           project
-            ? "text-brand-dark text-sm underline"
-            : "rounded-card bg-grey-800 h-[50px] px-[26px] text-white"
+            ? "text-brand-dark hover:text-grey-950 text-sm underline"
+            : "rounded-card bg-grey-800 hover:bg-grey-950 h-[50px] px-[26px] text-white"
         }
       >
         {project ? "Modifier" : "+ Créer un projet"}
@@ -209,7 +209,7 @@ export default function ProjectModal({ project }: { project?: Project }) {
             <button
               type="submit"
               disabled={isPending}
-              className="rounded-card bg-grey-800 group-invalid:bg-grey-200 group-invalid:text-grey-400 disabled:bg-grey-200 mt-8 h-[50px] self-start px-6 text-white group-invalid:pointer-events-none"
+              className="rounded-card bg-grey-800 hover:bg-grey-950 group-invalid:bg-grey-200 group-invalid:text-grey-400 disabled:bg-grey-200 mt-8 h-[50px] self-start px-6 text-white group-invalid:pointer-events-none"
             >
               {project ? "Enregistrer" : "Ajouter un projet"}
             </button>

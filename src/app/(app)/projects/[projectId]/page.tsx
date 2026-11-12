@@ -43,7 +43,7 @@ export default async function ProjectPage({
         <Link
           href="/projects"
           aria-label="Retour aux projets"
-          className="rounded-card border-grey-200 flex h-14 w-14 shrink-0 items-center justify-center border bg-white"
+          className="rounded-card border-grey-200 flex h-14 w-14 shrink-0 items-center justify-center hover:border-brand-dark hover:text-brand-dark border bg-white"
         >
           <svg
             width="24"
@@ -129,7 +129,7 @@ export default async function ProjectPage({
               </span>
               <button
                 type="button"
-                className="rounded-card text-brand-dark flex items-center gap-3 px-5 py-3"
+                className="rounded-card text-brand-dark hover:bg-brand-light flex items-center gap-3 px-5 py-3"
               >
                 <svg
                   width="20"

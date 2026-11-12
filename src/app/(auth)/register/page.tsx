@@ -59,7 +59,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-card bg-grey-800 disabled:bg-grey-400 h-[50px] self-center px-[74px] text-white"
+            className="rounded-card bg-grey-800 hover:bg-grey-950 disabled:bg-grey-200 disabled:text-grey-400 h-[50px] self-center px-[74px] text-white"
           >
             {isPending ? "Inscription..." : "S’inscrire"}
           </button>
@@ -67,7 +67,10 @@ export default function RegisterPage() {
 
         <p className="text-sm">
           Déjà inscrit ?{" "}
-          <Link href="/login" className="text-brand-dark underline">
+          <Link
+            href="/login"
+            className="text-brand-dark hover:text-grey-950 underline"
+          >
             Se connecter
           </Link>
         </p>
