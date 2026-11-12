@@ -4,8 +4,7 @@ import { getAssignedTasks, getProfile, getProject } from "@/api";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectModal from "@/components/ProjectModal";
 import TaskCard from "@/components/TaskCard";
-
-const priorities = ["URGENT", "HIGH", "MEDIUM", "LOW"];
+import { byPriority } from "@/utils";
 
 const tabs = [
   {
@@ -50,11 +49,7 @@ export default async function DashboardPage({
     redirect("/login");
   }
 
-  const tasks = tasksResponse.data.tasks.sort(
-    (a, b) =>
-      priorities.indexOf(a.priority) - priorities.indexOf(b.priority) ||
-      (a.dueDate ?? "9").localeCompare(b.dueDate ?? "9"),
-  );
+  const tasks = tasksResponse.data.tasks.sort(byPriority);
   const user = profile.data.user;
   const visibleTasks = tasks.filter((task) =>
     `${task.title} ${task.description ?? ""}`
