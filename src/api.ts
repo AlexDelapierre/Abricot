@@ -4,8 +4,18 @@ import type {
   AssignedTask,
   AuthData,
   Project,
+  ProjectTask,
+  Task,
   User,
 } from "@/types";
+
+interface TaskFields {
+  title: string;
+  description: string;
+  dueDate: string;
+  status: string;
+  assigneeIds: string[];
+}
 
 async function request<T>(
   path: string,
@@ -120,4 +130,43 @@ export async function searchUsers(query: string) {
   return request<{ users: Pick<User, "id" | "email" | "name">[] }>(
     `/users/search?query=${encodeURIComponent(query)}`,
   );
+}
+
+export async function getTasks(projectId: string) {
+  return request<{ tasks: ProjectTask[] }>(`/projects/${projectId}/tasks`);
+}
+
+export async function createTask(projectId: string, fields: TaskFields) {
+  return request<{ task: Task }>(`/projects/${projectId}/tasks`, {
+    method: "POST",
+    body: JSON.stringify(fields),
+  });
+}
+
+export async function updateTask(
+  projectId: string,
+  taskId: string,
+  fields: TaskFields,
+) {
+  return request<{ task: Task }>(`/projects/${projectId}/tasks/${taskId}`, {
+    method: "PUT",
+    body: JSON.stringify(fields),
+  });
+}
+
+export async function deleteTask(projectId: string, taskId: string) {
+  return request<undefined>(`/projects/${projectId}/tasks/${taskId}`, {
+    method: "DELETE",
+  });
+}
+
+export async function createComment(
+  projectId: string,
+  taskId: string,
+  content: string,
+) {
+  return request<undefined>(`/projects/${projectId}/tasks/${taskId}/comments`, {
+    method: "POST",
+    body: JSON.stringify({ content }),
+  });
 }
