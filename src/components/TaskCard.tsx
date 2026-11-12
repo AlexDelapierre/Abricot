@@ -78,7 +78,7 @@ export default function TaskCard({
 
       <Link
         href={`/projects/${task.project.id}`}
-        className={`rounded-card bg-grey-800 mt-6 flex h-[50px] w-[121px] items-center justify-center text-white ${
+        className={`rounded-card bg-grey-800 hover:bg-grey-950 mt-6 flex h-[50px] w-[121px] items-center justify-center text-white ${
           kanban ? "" : "md:absolute md:right-10 md:bottom-8 md:mt-0"
         }`}
       >

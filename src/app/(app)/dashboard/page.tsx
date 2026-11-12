@@ -90,7 +90,9 @@ export default async function DashboardPage({
               href={tab.href}
               aria-current={tab.view === view.view ? "page" : undefined}
               className={`rounded-card text-brand-dark flex items-center gap-3 px-5 py-3 ${
-                tab.view === view.view ? "bg-brand-light" : "bg-white"
+                tab.view === view.view
+                  ? "bg-brand-light"
+                  : "hover:bg-brand-light bg-white"
               }`}
             >
               <svg
