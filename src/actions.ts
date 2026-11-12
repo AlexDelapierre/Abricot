@@ -69,12 +69,14 @@ export async function updateProfileAction(
   previousState: {
     error: string;
     success: string;
-    name: string;
+    lastName: string;
+    firstName: string;
     email: string;
   },
   formData: FormData,
 ) {
-  const name = String(formData.get("name"));
+  const lastName = String(formData.get("lastName")).trim();
+  const firstName = String(formData.get("firstName")).trim();
   const email = String(formData.get("email"));
   const newPassword = String(formData.get("newPassword"));
 
@@ -85,22 +87,37 @@ export async function updateProfileAction(
     );
 
     if (!password.success) {
-      return { error: password.message, success: "", name, email };
+      return {
+        error: password.message,
+        success: "",
+        lastName,
+        firstName,
+        email,
+      };
     }
   }
 
-  const profile = await updateProfile(name, email);
+  const profile = await updateProfile(
+    [firstName, lastName].filter(Boolean).join(" "),
+    email,
+  );
 
   if (!profile.success) {
     const error = newPassword
       ? `Mot de passe modifié, mais informations non enregistrées : ${profile.message}`
       : profile.message;
 
-    return { error, success: "", name, email };
+    return { error, success: "", lastName, firstName, email };
   }
 
   revalidatePath("/profile");
-  return { error: "", success: "Informations mises à jour", name, email };
+  return {
+    error: "",
+    success: "Informations mises à jour",
+    lastName,
+    firstName,
+    email,
+  };
 }
 
 export async function createProjectAction(
