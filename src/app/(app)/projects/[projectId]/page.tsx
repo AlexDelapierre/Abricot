@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getProfile, getProject, getTasks } from "@/api";
+import AiModal from "@/components/AiModal";
 import ProjectModal from "@/components/ProjectModal";
 import ProjectTaskCard from "@/components/ProjectTaskCard";
 import TaskModal from "@/components/TaskModal";
@@ -66,7 +67,10 @@ export default async function ProjectPage({
           <p className="text-grey-600 text-lg">{project.description}</p>
         </div>
 
-        <TaskModal projectId={project.id} team={team} />
+        <div className="flex gap-3">
+          <TaskModal projectId={project.id} team={team} />
+          <AiModal />
+        </div>
       </div>
 
       <div className="rounded-card bg-grey-100 flex flex-wrap items-center justify-between gap-4 px-6 py-5 md:ml-[68px] md:px-[50px]">
