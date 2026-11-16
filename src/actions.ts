@@ -24,6 +24,7 @@ import {
 } from "@/api";
 import type { GeneratedTask, ProjectFormState, TaskFormState } from "@/types";
 
+// Enregistrer le token dans un cookie inaccessible au JavaScript du navigateur
 async function saveToken(token: string) {
   (await cookies()).set("token", token, {
     httpOnly: true,
@@ -99,6 +100,7 @@ export async function updateProfileAction(
     }
   }
 
+  // L'API n'a qu'un champ name : on assemble prénom et nom
   const profile = await updateProfile(
     [firstName, lastName].filter(Boolean).join(" "),
     email,
@@ -160,12 +162,14 @@ export async function updateProjectAction(
 
   const members = response.data.project.members;
 
+  // Ajouter les contributeurs qu'on vient de mettre dans la liste
   for (const email of emails) {
     if (!members.some((member) => member.user.email === email)) {
       await addContributor(id, email);
     }
   }
 
+  // Retirer les contributeurs qu'on vient d'enlever de la liste
   for (const member of members) {
     if (!emails.includes(member.user.email)) {
       await removeContributor(id, member.user.id);
@@ -183,6 +187,7 @@ export async function deleteProjectAction(formData: FormData) {
   redirect("/projects");
 }
 
+// Chercher les utilisateurs à ajouter au projet, sauf l'utilisateur connecté
 export async function searchUsersAction(query: string) {
   const [response, profile] = await Promise.all([
     searchUsers(query),
@@ -213,6 +218,7 @@ export async function createTaskAction(
     return { ...fields, error: response.message, saved: false };
   }
 
+  // L'API crée toujours la tâche « À faire », on change le statut juste après
   if (fields.status !== "TODO") {
     await updateTask(projectId, response.data.task.id, fields);
   }
@@ -273,6 +279,7 @@ export async function createCommentAction(formData: FormData) {
   revalidatePath(`/projects/${projectId}`);
 }
 
+// Générer des tâches avec Gemini à partir du nom et de la description du projet
 export async function generateTasksAction(projectId: string, prompt: string) {
   const error = "La génération des tâches a échoué, réessayez plus tard";
   const project = await getProject(projectId);

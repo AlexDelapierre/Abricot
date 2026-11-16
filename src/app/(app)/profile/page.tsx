@@ -6,6 +6,7 @@ export default async function ProfilePage() {
   const response = await getProfile();
 
   if (!response.data) {
+    // Pas de données de l'API (token expiré ou serveur éteint) : retour à la connexion
     redirect("/login");
   }
 

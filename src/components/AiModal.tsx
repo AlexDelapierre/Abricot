@@ -14,6 +14,7 @@ export default function AiModal({ projectId }: { projectId: string }) {
   const [error, setError] = useState("");
   const [isGenerating, startGenerating] = useTransition();
   const [isAdding, startAdding] = useTransition();
+  // Cacher les anciennes tâches pendant une nouvelle génération
   const hasTasks = tasks.length > 0 && !isGenerating;
 
   function generateTasks(formData: FormData) {

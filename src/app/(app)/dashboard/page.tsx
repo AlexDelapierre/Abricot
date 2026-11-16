@@ -39,6 +39,7 @@ export default async function DashboardPage({
   ]);
 
   if (!tasksResponse.data || !profile.data) {
+    // Pas de données de l'API (token expiré ou serveur éteint) : retour à la connexion
     redirect("/login");
   }
 
@@ -157,6 +158,7 @@ export default async function DashboardPage({
         {view.view === "kanban" && (
           <div className="grid gap-[22px] lg:-mx-[43px] lg:grid-cols-3">
             {columns.map((column) => {
+              // Garder seulement les tâches du mois en cours (ex. "2026-11")
               const columnTasks = tasks.filter(
                 (task) =>
                   task.status === column.status &&

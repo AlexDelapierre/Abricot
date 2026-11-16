@@ -18,6 +18,7 @@ interface TaskFields {
   assigneeIds: string[];
 }
 
+// Appeler l'API du backend avec le token de l'utilisateur
 async function request<T>(
   path: string,
   options: RequestInit = {},
@@ -34,6 +35,7 @@ async function request<T>(
     });
     return await response.json();
   } catch {
+    // Le backend ne répond pas
     return {
       success: false,
       message: "Serveur indisponible, réessayez plus tard",
@@ -62,6 +64,7 @@ export async function getProfile() {
 export async function updateProfile(name: string, email: string) {
   return request<{ user: User }>("/auth/profile", {
     method: "PUT",
+    // Ne pas envoyer le nom s'il est vide (l'API le refuserait)
     body: JSON.stringify({ name: name || undefined, email }),
   });
 }
@@ -172,11 +175,13 @@ export async function createComment(
   });
 }
 
+// Demander à Gemini de proposer des tâches au format JSON
 export async function generateTasks(text: string) {
   const response = await fetch(
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent",
     {
       method: "POST",
+      // Abandonner après 10 secondes sans réponse
       signal: AbortSignal.timeout(10000),
       headers: {
         "Content-Type": "application/json",

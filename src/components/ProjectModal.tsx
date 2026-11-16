@@ -28,12 +28,14 @@ export default function ProjectModal({ project }: { project?: Project }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Contributor[]>([]);
 
+  // Fermer la modale quand l'enregistrement a réussi
   useEffect(() => {
     if (state.saved) {
       dialog.current?.close();
     }
   }, [state]);
 
+  // Chercher à partir de 2 caractères pour limiter les appels à l'API
   async function search(value: string) {
     setQuery(value);
     setResults(
@@ -175,6 +177,7 @@ export default function ProjectModal({ project }: { project?: Project }) {
                       key={contributor.id}
                       className="bg-grey-200 text-grey-600 flex items-center gap-2 rounded-full px-4 py-1 text-sm"
                     >
+                      {/* Champ caché pour envoyer ce contributeur avec le formulaire */}
                       <input
                         type="hidden"
                         name="contributors"
@@ -206,6 +209,7 @@ export default function ProjectModal({ project }: { project?: Project }) {
               </p>
             )}
 
+            {/* Grisé en CSS (group-invalid) tant qu'un champ obligatoire est vide */}
             <button
               type="submit"
               disabled={isPending}

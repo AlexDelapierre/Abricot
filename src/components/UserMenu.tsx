@@ -7,6 +7,7 @@ import { logoutAction } from "@/actions";
 export default function UserMenu({ initials }: { initials?: string }) {
   const pathname = usePathname();
 
+  // La clé change à chaque page, ce qui referme le menu
   return (
     <details key={pathname} className="relative">
       <summary

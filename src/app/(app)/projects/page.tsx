@@ -7,6 +7,7 @@ export default async function ProjectsPage() {
   const response = await getProjects();
 
   if (!response.data) {
+    // Pas de données de l'API (token expiré ou serveur éteint) : retour à la connexion
     redirect("/login");
   }
 

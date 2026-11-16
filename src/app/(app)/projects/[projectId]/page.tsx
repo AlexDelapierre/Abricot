@@ -12,10 +12,12 @@ export default async function ProjectPage({
   searchParams,
 }: PageProps<"/projects/[projectId]">) {
   const { projectId } = await params;
+  // Lire le filtre de statut et la recherche dans l'URL (?status=…&q=…)
   const filters = await searchParams;
   const status = String(filters.status ?? "");
   const query = String(filters.q ?? "");
 
+  // Charger le projet, ses tâches et le profil en même temps
   const [response, tasksResponse, profile] = await Promise.all([
     getProject(projectId),
     getTasks(projectId),
@@ -29,6 +31,7 @@ export default async function ProjectPage({
   const { project } = response.data;
   const currentUser = profile.data.user;
   const team = [project.owner, ...project.members.map((member) => member.user)];
+  // Appliquer le filtre de statut puis la recherche dans le titre et la description
   const tasks = (tasksResponse.data?.tasks ?? [])
     .filter((task) => !status || task.status === status)
     .filter((task) =>

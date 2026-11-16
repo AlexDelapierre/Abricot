@@ -5,6 +5,7 @@ import { updateProfileAction } from "@/actions";
 import type { User } from "@/types";
 
 export default function ProfileForm({ user }: { user: User }) {
+  // Séparer le prénom (premier mot) du nom
   const [firstName, ...lastName] = (user.name ?? "").split(" ");
   const [state, formAction, isPending] = useActionState(updateProfileAction, {
     error: "",

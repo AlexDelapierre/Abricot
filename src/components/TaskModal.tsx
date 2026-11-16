@@ -27,8 +27,10 @@ export default function TaskModal({
     },
   );
   const assigneeIds = task?.assignees.map((assignee) => assignee.user.id) ?? [];
+  // Personnes cochées dans « Assigné à », pour afficher leur nombre en direct
   const [selectedIds, setSelectedIds] = useState(assigneeIds);
 
+  // Fermer la modale quand l'enregistrement a réussi
   useEffect(() => {
     if (state.saved) {
       dialog.current?.close();
@@ -64,6 +66,8 @@ export default function TaskModal({
         ref={dialog}
         onClose={() => {
           setSelectedIds(assigneeIds);
+          // Pour modifier une tâche, on ouvre la modale depuis le menu « Supprimer | Modifier » de sa carte.
+          // On referme ce menu en même temps que la modale, sinon il reste affiché sur la carte.
           dialog.current?.closest("details")?.removeAttribute("open");
         }}
         aria-label={task ? "Modifier une tâche" : "Créer une tâche"}
@@ -201,6 +205,7 @@ export default function TaskModal({
               </p>
             )}
 
+            {/* Grisé en CSS (group-invalid) tant qu'un champ obligatoire est vide */}
             <button
               type="submit"
               disabled={isPending}

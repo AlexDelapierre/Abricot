@@ -20,6 +20,7 @@ export function getInitials(name: string) {
 }
 
 export function byDueDate(a: Pick<Task, "dueDate">, b: Pick<Task, "dueDate">) {
+  // Trier par échéance, les tâches sans échéance ("9") passent à la fin
   return (a.dueDate ?? "9").localeCompare(b.dueDate ?? "9");
 }
 
