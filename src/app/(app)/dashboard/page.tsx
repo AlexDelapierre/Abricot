@@ -169,7 +169,7 @@ export default async function DashboardPage({
               return (
                 <section
                   key={column.status}
-                  className="rounded-card border-error-light border px-6 py-6"
+                  className="rounded-card border-error-light min-w-0 border px-6 py-6"
                 >
                   <h2 className="flex items-center gap-3 text-lg">
                     {column.title}
