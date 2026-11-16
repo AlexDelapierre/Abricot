@@ -109,13 +109,23 @@ export default function ProjectModal({ project }: { project?: Project }) {
               />
             </label>
 
-            <div className="flex flex-col gap-[7px]">
-              <label htmlFor="contributors-search" className="text-sm">
-                Contributeurs
-              </label>
+            <div className="group/contributors flex flex-col gap-[7px]">
+              <div className="flex items-baseline gap-2">
+                <label htmlFor="contributors-search" className="text-sm">
+                  Contributeurs
+                </label>
+                {/* Aide visible seulement quand on est dans le champ de recherche */}
+                <span
+                  id="contributors-hint"
+                  className="text-grey-600 hidden text-xs group-focus-within/contributors:inline"
+                >
+                  Rechercher par nom ou e-mail
+                </span>
+              </div>
               <div className="relative">
                 <input
                   id="contributors-search"
+                  aria-describedby="contributors-hint"
                   value={query}
                   onChange={(event) => search(event.target.value)}
                   placeholder={
