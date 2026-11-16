@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Abricot
 
-## Getting Started
+Project management app (projects, tasks, contributors, comments and a personal dashboard). Built with Next.js, React, TypeScript and Tailwind CSS.
 
-First, run the development server:
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) 20 or higher
+- The back end API: [dev-react-P10](https://github.com/OpenClassrooms-Student-Center/dev-react-P10)
+
+## Getting started
+
+### 1. Start the back end
 
 ```bash
+git clone https://github.com/OpenClassrooms-Student-Center/dev-react-P10.git
+cd dev-react-P10
+cp .env.example .env
+npm install
+npx prisma generate
+npx prisma migrate deploy
+npm run seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set a value for `JWT_SECRET` in `.env` before `npm install` (see the back end README). The API runs on `http://localhost:8000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Start the front end
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+In a second terminal, from this project's folder:
 
-## Learn More
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+The app is available on `http://localhost:3000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+In `.env.local`:
 
-## Deploy on Vercel
+- `API_URL`: the back end URL (`http://localhost:8000`)
+- `GEMINI_API_KEY`: a Gemini API key, used to suggest tasks in a project. The rest of the app works without it.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Demo accounts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Email               | Password      |
+| ------------------- | ------------- |
+| `alice@example.com` | `P@ssword123` |
+| `bob@example.com`   | `P@ssword123` |
+
+## Good to know
+
+The Kanban view only shows the tasks due this month. The seed tasks are dated 2024, so change a task's due date to see it there.
