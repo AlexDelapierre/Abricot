@@ -6,7 +6,7 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
     <>
       <a
         href="#content"
-        className="rounded-card bg-grey-950 focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:not-sr-only focus:px-4 focus:py-2 focus:text-white sr-only"
+        className="rounded-card bg-grey-950 focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:not-sr-only focus:px-4 focus:py-2 sr-only text-white"
       >
         Aller au contenu
       </a>

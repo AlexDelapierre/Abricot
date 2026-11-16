@@ -190,7 +190,7 @@ export default function ProjectTaskCard({
           </div>
           <button
             type="submit"
-            className="rounded-card bg-grey-800 hover:bg-grey-950 group-invalid/comment:bg-grey-200 group-invalid/comment:text-grey-400 h-[50px] self-end px-[54px] text-white group-invalid/comment:pointer-events-none"
+            className="rounded-card bg-grey-800 hover:bg-grey-950 group-invalid/comment:bg-grey-200 group-invalid/comment:text-grey-600 h-[50px] self-end px-[54px] text-white group-invalid/comment:pointer-events-none"
           >
             Envoyer
           </button>
