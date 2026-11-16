@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getAssignedTasks, getProfile, getProject } from "@/api";
-import ProjectCard from "@/components/ProjectCard";
+import { getAssignedTasks, getProfile } from "@/api";
 import ProjectModal from "@/components/ProjectModal";
 import TaskCard from "@/components/TaskCard";
 import { byDueDate } from "@/utils";
@@ -18,12 +17,6 @@ const tabs = [
     label: "Kanban",
     href: "/dashboard?view=kanban",
     icon: "M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z",
-  },
-  {
-    view: "projects",
-    label: "Mes projets",
-    href: "/dashboard?view=projects",
-    icon: "M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z",
   },
 ];
 
@@ -56,15 +49,6 @@ export default async function DashboardPage({
       .toLowerCase()
       .includes(query.toLowerCase()),
   );
-  const projects = (
-    view.view === "projects"
-      ? await Promise.all(
-          [...new Set(tasks.map((task) => task.project.id))].map(
-            async (id) => (await getProject(id)).data?.project,
-          ),
-        )
-      : []
-  ).filter((project) => project !== undefined);
 
   return (
     <section className="mx-auto mt-11 flex max-w-[1215px] flex-col gap-[59px]">
@@ -204,25 +188,6 @@ export default async function DashboardPage({
                 </section>
               );
             })}
-          </div>
-        )}
-
-        {view.view === "projects" && (
-          <div>
-            <h2 className="sr-only">Mes projets</h2>
-            {projects.length === 0 ? (
-              <p className="text-grey-600">
-                Aucun projet : aucune tâche ne vous est assignée.
-              </p>
-            ) : (
-              <ul className="grid gap-x-[14px] gap-y-[18px] md:grid-cols-2 lg:grid-cols-3">
-                {projects.map((project) => (
-                  <li key={project.id}>
-                    <ProjectCard project={project} />
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         )}
       </div>
