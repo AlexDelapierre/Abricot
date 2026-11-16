@@ -157,13 +157,12 @@ export default async function DashboardPage({
         {view.view === "kanban" && (
           <div className="grid gap-[22px] lg:-mx-[43px] lg:grid-cols-3">
             {columns.map((column) => {
-              // const columnTasks = tasks.filter(
-              //   (task) =>
-              //     task.status === column.status &&
-              //     task.dueDate?.startsWith(new Date().toISOString().slice(0, 7)),
-              // );
               const columnTasks = tasks.filter(
-                (task) => task.status === column.status,
+                (task) =>
+                  task.status === column.status &&
+                  task.dueDate?.startsWith(
+                    new Date().toISOString().slice(0, 7),
+                  ),
               );
 
               return (
