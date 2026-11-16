@@ -204,7 +204,7 @@ export default function TaskModal({
             <button
               type="submit"
               disabled={isPending}
-              className="rounded-card bg-grey-800 hover:bg-grey-950 group-invalid:bg-grey-200 group-invalid:text-grey-400 disabled:bg-grey-200 mt-8 h-[50px] self-start px-6 text-white group-invalid:pointer-events-none"
+              className="rounded-card bg-grey-800 hover:bg-grey-950 group-invalid:bg-grey-200 group-invalid:text-grey-600 disabled:bg-grey-200 mt-8 h-[50px] self-start px-6 text-white group-invalid:pointer-events-none"
             >
               {task ? "Enregistrer" : "+ Ajouter une tâche"}
             </button>
