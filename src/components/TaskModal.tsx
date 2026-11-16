@@ -180,7 +180,7 @@ export default function TaskModal({
                 {(["TODO", "IN_PROGRESS", "DONE"] as const).map((status) => (
                   <label
                     key={status}
-                    className={`has-checked:ring-current has-focus-visible:outline-2 cursor-pointer rounded-full px-4 py-1 text-sm has-checked:ring-1 ${statuses[status].className}`}
+                    className={`has-checked:ring-current has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-current cursor-pointer rounded-full px-4 py-1 text-sm has-checked:ring-1 ${statuses[status].className}`}
                   >
                     <input
                       type="radio"
