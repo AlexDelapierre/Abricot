@@ -1,7 +1,5 @@
 import type { Task } from "@/types";
 
-const priorities = ["URGENT", "HIGH", "MEDIUM", "LOW"];
-
 export const statuses = {
   TODO: { label: "À faire", className: "bg-error-light text-error" },
   IN_PROGRESS: {
@@ -21,12 +19,18 @@ export function getInitials(name: string) {
     .toUpperCase();
 }
 
-export function byPriority(
-  a: Pick<Task, "priority" | "dueDate">,
-  b: Pick<Task, "priority" | "dueDate">,
-) {
-  return (
-    priorities.indexOf(a.priority) - priorities.indexOf(b.priority) ||
-    (a.dueDate ?? "9").localeCompare(b.dueDate ?? "9")
-  );
+export function byDueDate(a: Pick<Task, "dueDate">, b: Pick<Task, "dueDate">) {
+  return (a.dueDate ?? "9").localeCompare(b.dueDate ?? "9");
 }
+
+// const priorities = ["URGENT", "HIGH", "MEDIUM", "LOW"];
+//
+// export function byPriority(
+//   a: Pick<Task, "priority" | "dueDate">,
+//   b: Pick<Task, "priority" | "dueDate">,
+// ) {
+//   return (
+//     priorities.indexOf(a.priority) - priorities.indexOf(b.priority) ||
+//     (a.dueDate ?? "9").localeCompare(b.dueDate ?? "9")
+//   );
+// }

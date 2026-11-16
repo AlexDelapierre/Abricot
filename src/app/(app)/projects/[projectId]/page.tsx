@@ -5,7 +5,7 @@ import AiModal from "@/components/AiModal";
 import ProjectModal from "@/components/ProjectModal";
 import ProjectTaskCard from "@/components/ProjectTaskCard";
 import TaskModal from "@/components/TaskModal";
-import { byPriority, getInitials, statuses } from "@/utils";
+import { byDueDate, getInitials, statuses } from "@/utils";
 
 export default async function ProjectPage({
   params,
@@ -36,7 +36,7 @@ export default async function ProjectPage({
         .toLowerCase()
         .includes(query.toLowerCase()),
     )
-    .sort(byPriority);
+    .sort(byDueDate);
 
   return (
     <section className="mx-auto mt-11 flex max-w-[1283px] flex-col gap-12">

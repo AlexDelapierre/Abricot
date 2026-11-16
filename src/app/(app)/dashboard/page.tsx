@@ -4,7 +4,7 @@ import { getAssignedTasks, getProfile, getProject } from "@/api";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectModal from "@/components/ProjectModal";
 import TaskCard from "@/components/TaskCard";
-import { byPriority } from "@/utils";
+import { byDueDate } from "@/utils";
 
 const tabs = [
   {
@@ -49,7 +49,7 @@ export default async function DashboardPage({
     redirect("/login");
   }
 
-  const tasks = tasksResponse.data.tasks.sort(byPriority);
+  const tasks = tasksResponse.data.tasks.sort(byDueDate);
   const user = profile.data.user;
   const visibleTasks = tasks.filter((task) =>
     `${task.title} ${task.description ?? ""}`
