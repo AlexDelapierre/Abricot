@@ -3,6 +3,7 @@ import type {
   ApiResponse,
   AssignedTask,
   AuthData,
+  GeneratedTask,
   Project,
   ProjectTask,
   Task,
@@ -169,4 +170,49 @@ export async function createComment(
     method: "POST",
     body: JSON.stringify({ content }),
   });
+}
+
+export async function generateTasks(text: string) {
+  const response = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent",
+    {
+      method: "POST",
+      signal: AbortSignal.timeout(10000),
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": process.env.GEMINI_API_KEY ?? "",
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "ARRAY",
+            maxItems: 3,
+            items: {
+              type: "OBJECT",
+              properties: {
+                title: { type: "STRING" },
+                description: { type: "STRING" },
+              },
+              required: ["title", "description"],
+            },
+          },
+        },
+      }),
+    },
+  ).catch(() => null);
+
+  if (!response?.ok) {
+    return null;
+  }
+
+  try {
+    const data = await response.json();
+    return JSON.parse(
+      data.candidates[0].content.parts[0].text,
+    ) as GeneratedTask[];
+  } catch {
+    return null;
+  }
 }

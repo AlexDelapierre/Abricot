@@ -10,7 +10,9 @@ import {
   createTask,
   deleteProject,
   deleteTask,
+  generateTasks,
   getProfile,
+  getProject,
   login,
   register,
   removeContributor,
@@ -20,7 +22,7 @@ import {
   updateProject,
   updateTask,
 } from "@/api";
-import type { ProjectFormState, TaskFormState } from "@/types";
+import type { GeneratedTask, ProjectFormState, TaskFormState } from "@/types";
 
 async function saveToken(token: string) {
   (await cookies()).set("token", token, {
@@ -269,6 +271,55 @@ export async function createCommentAction(formData: FormData) {
     String(formData.get("content")),
   );
   revalidatePath(`/projects/${projectId}`);
+}
+
+export async function generateTasksAction(projectId: string, prompt: string) {
+  const error = "La génération des tâches a échoué, réessayez plus tard";
+  const project = await getProject(projectId);
+
+  if (!project.data) {
+    return { error, tasks: [] };
+  }
+
+  const { name, description } = project.data.project;
+  const tasks = await generateTasks(
+    `Tu aides à planifier le projet « ${name} » (${description ?? "sans description"}). Si la demande ci-dessous ne décrit pas de tâches à réaliser pour ce projet, renvoie un tableau vide. Sinon, propose exactement 3 tâches en français, avec un titre court de moins de 40 caractères et une description d'une seule phrase de moins de 55 caractères. Demande : ${prompt}`,
+  );
+
+  if (!tasks) {
+    return { error, tasks: [] };
+  }
+
+  if (!tasks.length) {
+    return {
+      error: "Décrivez les tâches que vous souhaitez ajouter au projet",
+      tasks,
+    };
+  }
+
+  return { error: "", tasks };
+}
+
+export async function addGeneratedTasksAction(
+  projectId: string,
+  tasks: GeneratedTask[],
+) {
+  for (const task of tasks) {
+    const response = await createTask(projectId, {
+      ...task,
+      dueDate: "",
+      status: "TODO",
+      assigneeIds: [],
+    });
+
+    if (!response.success) {
+      revalidatePath(`/projects/${projectId}`);
+      return response.message;
+    }
+  }
+
+  revalidatePath(`/projects/${projectId}`);
+  return "";
 }
 
 export async function logoutAction() {
