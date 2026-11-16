@@ -69,7 +69,7 @@ export default async function ProjectPage({
 
         <div className="flex gap-3">
           <TaskModal projectId={project.id} team={team} />
-          <AiModal />
+          <AiModal projectId={project.id} />
         </div>
       </div>
 

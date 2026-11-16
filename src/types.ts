@@ -59,6 +59,11 @@ export interface ProjectTask extends Task {
   comments: Comment[];
 }
 
+export interface GeneratedTask {
+  title: string;
+  description: string;
+}
+
 export interface TaskFormState {
   error: string;
   saved: boolean;
