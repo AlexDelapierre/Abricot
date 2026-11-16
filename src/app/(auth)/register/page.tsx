@@ -13,7 +13,7 @@ export default function RegisterPage() {
   return (
     <main className="flex min-h-screen">
       <div className="flex w-full flex-col items-center justify-between px-4 py-14 md:w-[39%] md:px-[140px]">
-        <Image src="/logo.svg" alt="Abricot" width={253} height={32} priority />
+        <Image src="/logo.svg" alt="Abricot" width={253} height={33} priority />
 
         <form
           action={formAction}
@@ -82,6 +82,7 @@ export default function RegisterPage() {
           alt=""
           fill
           sizes="61vw"
+          loading="eager"
           className="object-cover"
         />
       </div>
