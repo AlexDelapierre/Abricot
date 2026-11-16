@@ -3,21 +3,21 @@
 @theme {
   --color-brand-main: #ff8b42;
   --color-brand-light: #ffe8d9;
-  --color-brand-dark: #d35908;
+  --color-brand-dark: #b14a07;
 
   --color-grey-50: #f9fafb;
   --color-grey-100: #f3f4f6;
   --color-grey-200: #e5e7eb;
   --color-grey-400: #9ca3af;
-  --color-grey-600: #6b7280;
+  --color-grey-600: #606773;
   --color-grey-800: #1f1f1f;
   --color-grey-950: #0f0f0f;
 
-  --color-error: #ef4444;
+  --color-error: #cd1212;
   --color-error-light: #ffe0e0;
-  --color-warning: #e08d00;
+  --color-warning: #996000;
   --color-warning-light: #fff0d7;
-  --color-success: #27ae60;
+  --color-success: #1d8248;
   --color-success-light: #f1fff7;
 
   --radius-card: 10px;
