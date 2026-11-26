@@ -156,7 +156,7 @@ export default async function DashboardPage({
         )}
 
         {view.view === "kanban" && (
-          <div className="grid gap-[22px] lg:-mx-[43px] lg:grid-cols-3">
+          <div className="mb-31 grid gap-[22px] lg:-mx-[43px] lg:grid-cols-3">
             {columns.map((column) => {
               // Garder seulement les tâches du mois en cours (ex. "2026-11")
               const columnTasks = tasks.filter(
@@ -170,7 +170,7 @@ export default async function DashboardPage({
               return (
                 <section
                   key={column.status}
-                  className="rounded-card border-error-light min-w-0 border px-6 py-6"
+                  className="rounded-card border-error-light min-w-0 border bg-white px-6 py-6"
                 >
                   <h2 className="flex items-center gap-3 text-lg">
                     {column.title}
