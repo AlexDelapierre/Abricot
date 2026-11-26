@@ -42,7 +42,7 @@ export default async function ProjectPage({
     .sort(byDueDate);
 
   return (
-    <section className="mx-auto mt-11 flex max-w-[1283px] flex-col gap-12">
+    <section className="mx-auto mt-11 flex max-w-[1215px] flex-col gap-12">
       <div className="flex flex-wrap items-start gap-[17px]">
         <Link
           href="/projects"

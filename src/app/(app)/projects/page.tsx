@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
   );
 
   return (
-    <section className="mx-auto mt-11 flex max-w-[1166px] flex-col gap-16">
+    <section className="mx-auto mt-11 flex max-w-[1215px] flex-col gap-16">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="flex flex-col gap-[14px]">
           <h1 className="text-2xl">Mes projets</h1>
